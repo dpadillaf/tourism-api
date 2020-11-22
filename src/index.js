@@ -1,5 +1,4 @@
 const express = require( 'express' );
-//const mongoose = require( 'mongoose' );
 const bodyParser = require( 'body-parser' );
 
 require( './config/config' );
@@ -7,12 +6,13 @@ require( './config/config' );
 const app = express();
 
 //db connection
+require( './database' );
 
-//request data handler
+//middlewares
 app.use( bodyParser.urlencoded( { extended: false } ) );
 app.use( bodyParser.json() );
 
-//import routs
+//import routes
 app.use( require( './routes/index' ) );
 
 //init server
