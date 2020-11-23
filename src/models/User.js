@@ -9,7 +9,7 @@ let validRoles = {
 const Schema = mongoose.Schema;
 
 let userSchema = new Schema( {
-    nombre: {
+    name: {
         type: String,
         required: [ true, 'El campo nombre es requerido' ]
     },
@@ -27,13 +27,17 @@ let userSchema = new Schema( {
         default: 'USER_ROLE',
         enum: validRoles
     },
-    estado: {
+    state: {
         type: Boolean,
         default: true
     },
     google: {
         type: Boolean,
         default: false
+    },
+    created_at: { 
+        type: Date, 
+        default: Date.now() 
     }
 } );
 

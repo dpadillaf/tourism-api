@@ -24,7 +24,7 @@ process.env.URLDB = urlDB;
 /**
  * Token expiration
  */
-process.env.VENCIMINTO_TOKEN = 60 * 60 * 24 * 30;
+process.env.EXPIRATION_TOKEN = 60 * 60 * 24 * 30;
 
 /**
  * seed authentication
