@@ -4,10 +4,10 @@ const Department = require( '../models/Department' );
 
 departmentCtrl.create = async ( req, res ) => {
     
-    let body = req.body;
+    let { name } = req.body;
     
     let department = new Department( {
-        name: body.name
+        name
     } );
 
     department.save( ( err, depDB ) => {
@@ -30,7 +30,7 @@ departmentCtrl.create = async ( req, res ) => {
 
 departmentCtrl.getAll = async ( req, res ) => {
 
-    Department.find( { state: true }, 'name state' )
+    Department.find( {}, 'name state' )
                 .sort( 'name' )
                 .exec( ( err, departments ) => {
 
