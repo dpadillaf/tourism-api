@@ -1,16 +1,16 @@
-const departmentCtrl = {};
+const tagCtrl = {};
 
-const Department = require( '../models/Department' );
+const Tag = require( '../models/Tag' );
 
-departmentCtrl.create = async ( req, res ) => {
+tagCtrl.create = async ( req, res ) => {
     
     let { name } = req.body;
     
-    let department = new Department( {
+    let tag = new Tag( {
         name
     } );
 
-    department.save( ( err, depDB ) => {
+    tag.save( ( err, tagDB ) => {
 
         if ( err ){
             return res.status( 400 ).json( {
@@ -21,18 +21,18 @@ departmentCtrl.create = async ( req, res ) => {
 
         return res.json( {
             ok: true,
-            department: depDB
+            tag: tagDB
         } );
 
     } );
 
 };
 
-departmentCtrl.getAll = async ( req, res ) => {
+tagCtrl.getAll = async ( req, res ) => {
 
-    Department.find( {}, 'name state' )
+    Tag.find( {}, 'name state' )
                 .sort( 'name' )
-                .exec( ( err, departments ) => {
+                .exec( ( err, tags ) => {
 
         if ( err ){
             return res.status( 400 ).json( {
@@ -43,18 +43,18 @@ departmentCtrl.getAll = async ( req, res ) => {
 
         return res.json( {
             ok: true,
-            departments
+            tags
         } );
 
     } );
 
 };
 
-departmentCtrl.getById = async ( req, res ) => {
+tagCtrl.getById = async ( req, res ) => {
 
     let { id } = req.params;
 
-    Department.findById( id, 'name state', ( err, depDB ) => {
+    Tag.findById( id, 'name state', ( err, tagDB ) => {
         
         if ( err ){
             return res.status( 400 ).json( {
@@ -63,30 +63,30 @@ departmentCtrl.getById = async ( req, res ) => {
             } );
         }
 
-        if ( !depDB ){
+        if ( !tagDB ){
             return res.status( 400 ).json( {
                 ok: false,
                 err: {
-                    message: 'No existe Departamento'
+                    message: 'No existe Tag'
                 }
             } );
         }
 
         return res.json( {
             ok: true,
-            department: depDB
+            tag: tagDB
         } );
 
     } );
 
 };
 
-departmentCtrl.update = async ( req, res ) => {
+tagCtrl.update = async ( req, res ) => {
 
     let { id } = req.params;
     let { state, name } = req.body;
 
-    Department.findByIdAndUpdate( id, { state, name }, { new: true }, ( err, depDB ) => {
+    Tag.findByIdAndUpdate( id, { state, name }, { new: true }, ( err, tagDB ) => {
         
         if ( err ){
             return res.status( 400 ).json( {
@@ -95,29 +95,29 @@ departmentCtrl.update = async ( req, res ) => {
             } );
         }
 
-        if ( !depDB ){
+        if ( !tagDB ){
             return res.status( 400 ).json( {
                 ok: false,
                 err: {
-                    message: 'No existe Departamento'
+                    message: 'No existe Tag'
                 }
             } );
         }
 
         return res.json( {
             ok: true,
-            department: depDB
+            tag: tagDB
         } );
 
     } );
 
 };
 
-departmentCtrl.remove = async ( req, res ) => {
+tagCtrl.remove = async ( req, res ) => {
 
     let { id } = req.params;
 
-    Department.findByIdAndRemove( id, ( err, departmentDeleted ) => {
+    Tag.deleteOne( { _id: id }, ( err, tagDeleted ) => {
         
         if ( err ){
             return res.status( 400 ).json( {
@@ -126,22 +126,22 @@ departmentCtrl.remove = async ( req, res ) => {
             } );
         }
 
-        if ( !departmentDeleted ){
+        if ( !tagDeleted ){
             return res.status( 400 ).json( {
                 ok: false,
                 err: {
-                    message: 'No existe Departamento'
+                    message: 'No existe Tag'
                 }
             } );
         }
 
         return res.json( {
             ok: true,
-            department: departmentDeleted
+            tag: tagDeleted
         } );
 
     } );
 
 };
 
-module.exports = departmentCtrl;
+module.exports = tagCtrl;

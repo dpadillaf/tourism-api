@@ -10,18 +10,21 @@ const {
     getAll,
     getByDepartment,
     getById,
-    update
+    update,
+    remove
 } = require( '../controllers/city.controller' );
 
 //Routes
-router.get( '/cities', [ verifyToken, verifyAdmin_Role ], getAll );
+router.get( '/cities', getAll );
 
-router.get( '/cities/:id', [ verifyToken, verifyAdmin_Role ], getByDepartment );
+router.get( '/cities/:id', getByDepartment );
 
-router.get( '/city/:id', [ verifyToken, verifyAdmin_Role ], getById );
+router.get( '/city/:id', getById );
 
 router.post( '/city', [ verifyToken, verifyAdmin_Role ], create );
 
 router.put( '/city/:id', [ verifyToken, verifyAdmin_Role ], update );
+
+router.delete( '/city/:id', [ verifyToken, verifyAdmin_Role ], remove );
 
 module.exports = router;

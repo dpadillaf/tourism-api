@@ -37,19 +37,19 @@ cityCtrl.getAll = async ( req, res ) => {
                 .populate( 'department', 'name' )
                 .exec( ( err, cities ) => {
 
-                    if ( err ){
-                        return res.status( 400 ).json( {
-                            ok: false,
-                            err
-                        } );
-                    }
-            
-                    return res.json( {
-                        ok: true,
-                        cities
-                    } );
-            
-                } );
+        if ( err ){
+            return res.status( 400 ).json( {
+                ok: false,
+                err
+            } );
+        }
+
+        return res.json( {
+            ok: true,
+            cities
+        } );
+
+    } );
 
 };
 
@@ -59,22 +59,21 @@ cityCtrl.getByDepartment = async ( req, res ) => {
 
     City.find( { department: id }, 'name description state' )
                 .sort( 'name' )
-                .populate( 'department', 'name' )
                 .exec( ( err, cities ) => {
 
-                    if ( err ){
-                        return res.status( 400 ).json( {
-                            ok: false,
-                            err
-                        } );
-                    }
-            
-                    return res.json( {
-                        ok: true,
-                        cities
-                    } );
-            
-                } );
+        if ( err ){
+            return res.status( 400 ).json( {
+                ok: false,
+                err
+            } );
+        }
+
+        return res.json( {
+            ok: true,
+            cities
+        } );
+
+    } );
 
 };
 
@@ -90,6 +89,15 @@ cityCtrl.getById = async ( req, res ) => {
             return res.status( 400 ).json( {
                 ok: false,
                 err
+            } );
+        }
+
+        if ( !cityDB ){
+            return res.status( 400 ).json( {
+                ok: false,
+                err: {
+                    message: 'No existe Ciudad'
+                }
             } );
         }
 
@@ -128,6 +136,37 @@ cityCtrl.update = async ( req, res ) => {
         return res.json( {
             ok: true,
             city: cityDB
+        } );
+
+    } );
+
+};
+
+cityCtrl.remove = async ( req, res ) => {
+
+    let { id } = req.params;
+
+    City.findByIdAndRemove( id, ( err, cityDeleted ) => {
+        
+        if ( err ){
+            return res.status( 400 ).json( {
+                ok: false,
+                err
+            } );
+        }
+
+        if ( !cityDeleted ){
+            return res.status( 400 ).json( {
+                ok: false,
+                err: {
+                    message: 'No existe Ciudad'
+                }
+            } );
+        }
+
+        return res.json( {
+            ok: true,
+            city: cityDeleted
         } );
 
     } );
