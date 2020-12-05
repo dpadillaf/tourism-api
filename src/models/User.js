@@ -27,6 +27,10 @@ let userSchema = new Schema( {
         default: 'USER_ROLE',
         enum: validRoles
     },
+    place: {
+        type: Schema.Types.ObjectId,
+        ref: 'Place'
+    },
     state: {
         type: Boolean,
         default: true
