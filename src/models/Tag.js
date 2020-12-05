@@ -19,10 +19,11 @@ let tagSchema = new Schema( {
     }
 } );
 
-tagSchema.pre('deleteOne', function(next) { 
+tagSchema.pre('deleteOne', async function(next) { 
     // remove references when a tag is removed
-    PlaceTag.deleteMany( { tag: this.id } ).exec();//console.log('ok '+ JSON.stringify(this))
-    next(); 
+    const doc = await this.model.findOne(this.getFilter());
+    await PlaceTag.deleteMany( { tag: doc._id } ).exec();
+    next();
 }); 
 
 module.exports = mongoose.model( 'Tag', tagSchema );

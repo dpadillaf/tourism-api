@@ -165,8 +165,18 @@ placeCtrl.update = async ( req, res ) => {
 placeCtrl.remove = async ( req, res ) => {
 
     let { id } = req.params;
+    let { role, place } = req.user;
 
-    Place.findByIdAndRemove( id, ( err, placeDeleted ) => {
+    if ( role === 'SITE_ADMIN_ROLE' && place !== id ){
+        return res.status( 400 ).json( {
+            ok: false,
+            err: {
+                message: 'No está autorizado!'
+            }
+        } );
+    }
+
+    Place.deleteOne( { _id: id }, ( err, placeDeleted ) => {
         
         if ( err ){
             return res.status( 400 ).json( {

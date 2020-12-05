@@ -8,5 +8,6 @@ app.use( require( './city' ) );
 app.use( require( './place' ) );
 app.use( require( './tag' ) );
 app.use( require( './placeTag' ) );
+app.use( require( './opinion' ) );
 
 module.exports = app;

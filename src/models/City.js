@@ -20,6 +20,6 @@ let citySchema = new Schema( {
         type: Date, 
         default: Date.now() 
     }
-} );
+} ); 
 
 module.exports = mongoose.model( 'City', citySchema );
